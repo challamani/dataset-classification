@@ -14,7 +14,7 @@ public class Condition {
         return predicate;
     }
 
-    private Condition(ConditionBuilder conditionBuilder){
+    private Condition(ConditionBuilder conditionBuilder) {
         type = conditionBuilder.type;
         createPredicate(type, conditionBuilder);
     }
@@ -31,7 +31,7 @@ public class Condition {
         return type;
     }
 
-    private void createPredicate(String type, ConditionBuilder conditionBuilder){
+    private void createPredicate(String type, ConditionBuilder conditionBuilder) {
         switch (type) {
             case ConditionBuilder.BETWEEN:
                 Predicate<Double> predicate = (a) -> (conditionBuilder.firstValue <= a && conditionBuilder.secondValue >= a);
@@ -56,13 +56,13 @@ public class Condition {
         }
     }
 
-    public static class ConditionBuilder{
+    public static class ConditionBuilder {
 
-        private static final String BETWEEN="BETWEEN";
-        private static final String STRING_EQ="STRING_EQ";
-        private static final String NUM_EQ="NUMBER_EQ";
-        private static final String LESS_THAN="LESS_THAN";
-        private static final String GREATER_THAN="GREATER_THAN";
+        private static final String BETWEEN = "BETWEEN";
+        private static final String STRING_EQ = "STRING_EQ";
+        private static final String NUM_EQ = "NUMBER_EQ";
+        private static final String LESS_THAN = "LESS_THAN";
+        private static final String GREATER_THAN = "GREATER_THAN";
 
         private String stringValue;
         private String type;
@@ -71,48 +71,47 @@ public class Condition {
         private Integer number;
 
 
-
-        public Condition build(){
+        public Condition build() {
             return new Condition(this);
         }
 
-        private ConditionBuilder stringEquals(String str){
-            type=STRING_EQ;
+        private ConditionBuilder stringEquals(String str) {
+            type = STRING_EQ;
             stringValue = str;
             return this;
         }
 
-        private ConditionBuilder numberEquals(Integer num){
-            type=NUM_EQ;
+        private ConditionBuilder numberEquals(Integer num) {
+            type = NUM_EQ;
             number = num;
             return this;
         }
 
-        private ConditionBuilder greaterThan(Double value){
-            type=GREATER_THAN;
+        private ConditionBuilder greaterThan(Double value) {
+            type = GREATER_THAN;
             firstValue = value;
             return this;
         }
 
-        private ConditionBuilder lessThan(Double value){
-            type=LESS_THAN;
+        private ConditionBuilder lessThan(Double value) {
+            type = LESS_THAN;
             firstValue = value;
             return this;
         }
 
-        private ConditionBuilder betweenValue(Double a, Double b){
-            type=BETWEEN;
+        private ConditionBuilder betweenValue(Double a, Double b) {
+            type = BETWEEN;
             firstValue = a;
             secondValue = b;
             return this;
         }
 
-        public ConditionBuilder setType(String type){
-            this.type=type;
+        public ConditionBuilder setType(String type) {
+            this.type = type;
             return this;
         }
 
-        public ConditionBuilder setValue(String value){
+        public ConditionBuilder setValue(String value) {
             switch (type) {
                 case BETWEEN:
                     String[] values = value.split(",");

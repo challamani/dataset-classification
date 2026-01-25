@@ -16,7 +16,7 @@ public class ClassificationTreeNode {
 
     public ClassificationTreeNode() {
         expandedIcon = "fa fa-folder-open";
-        collapsedIcon="fa fa-folder";
+        collapsedIcon = "fa fa-folder";
     }
 
     public String getFileName() {

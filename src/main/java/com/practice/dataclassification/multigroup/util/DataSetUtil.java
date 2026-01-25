@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DataSetUtil {
 
-    public static String getEvalString(JsonObject jsonObject, List<NodeLevel> nodeLevels){
+    public static String getEvalString(JsonObject jsonObject, List<NodeLevel> nodeLevels) {
         StringBuilder evalString = new StringBuilder();
         nodeLevels.forEach(nodeLevel -> evalString.append(jsonObject.get(nodeLevel.name())
                 .getAsJsonPrimitive().getAsString()).append("|"));

@@ -43,7 +43,7 @@ public class ClassificationTreeService {
                 request.classificationOption(), request.datasetName());
 
         try {
-            log.info("Classification tree nodes {}",new ObjectMapper().writeValueAsString(stringClassificationNodeMap));
+            log.info("Classification tree nodes {}", new ObjectMapper().writeValueAsString(stringClassificationNodeMap));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -67,9 +67,9 @@ public class ClassificationTreeService {
         return dataNodeDataSet;
     }
 
-    private void  updateTreeWithInstanceValue(JsonObject record, String[] values,
-                                              ClassificationTreeStructure classificationTreeStructure,
-                                              Map<String,List<JsonObject>> dataNodeDataSet) {
+    private void updateTreeWithInstanceValue(JsonObject record, String[] values,
+                                             ClassificationTreeStructure classificationTreeStructure,
+                                             Map<String, List<JsonObject>> dataNodeDataSet) {
         int index = 0;
         Node<JsonObject> rootNode = classificationTreeStructure.getRoot();
         Integer instanceCount = rootNode.getInstanceCount() == null ? 0 : rootNode.getInstanceCount() + 1;
@@ -87,7 +87,7 @@ public class ClassificationTreeService {
 
     private void updateLinkedTargetNodes(JsonObject record, String[] values,
                                          int index, Node<JsonObject> node,
-                                         Map<String,List<JsonObject>> dataNodeDataSet) {
+                                         Map<String, List<JsonObject>> dataNodeDataSet) {
 
         Integer instanceCount = node.getInstanceCount() == null ? 1 : node.getInstanceCount() + 1;
         node.setInstanceCount(instanceCount);
@@ -117,13 +117,13 @@ public class ClassificationTreeService {
         }
     }
 
-    public ClassificationTreeNode getClassificationTree(ClassificationTreeRequest classificationTreeRequest){
+    public ClassificationTreeNode getClassificationTree(ClassificationTreeRequest classificationTreeRequest) {
         createClassificationTreeNodes(classificationTreeRequest);
         return classificationTreeStructure.getDecisionTree();
     }
 
-    public List<FlatNode> getFlatClassificationNodeRelations(ClassificationTreeRequest classificationTreeRequest){
-        ClassificationTreeNode classificationTreeNode =  getClassificationTree(classificationTreeRequest);
+    public List<FlatNode> getFlatClassificationNodeRelations(ClassificationTreeRequest classificationTreeRequest) {
+        ClassificationTreeNode classificationTreeNode = getClassificationTree(classificationTreeRequest);
         List<FlatNode> flatNodes = new ArrayList<>();
        /* flatNodes.add(new FlatNode(classificationTreeNode.getName(),
                 classificationTreeNode.getParent(),
@@ -136,14 +136,14 @@ public class ClassificationTreeService {
         return flatNodes;
     }
 
-    private void populateFlatNodes(ClassificationTreeNode classificationTreeNode,List<FlatNode> flatNodes) {
+    private void populateFlatNodes(ClassificationTreeNode classificationTreeNode, List<FlatNode> flatNodes) {
         flatNodes.add(new FlatNode(classificationTreeNode.getName(),
-                (classificationTreeNode.getParent().equalsIgnoreCase("ROOT")?"":classificationTreeNode.getParent()),
+                (classificationTreeNode.getParent().equalsIgnoreCase("ROOT") ? "" : classificationTreeNode.getParent()),
                 classificationTreeNode.getLabel(),
                 classificationTreeNode.getRecordsCount(),
                 classificationTreeNode.getAttribute()));
 
-        if(!CollectionUtils.isEmpty(classificationTreeNode.getChildren())){
+        if (!CollectionUtils.isEmpty(classificationTreeNode.getChildren())) {
             classificationTreeNode.getChildren().forEach(treeNode -> {
                 populateFlatNodes(treeNode, flatNodes);
             });

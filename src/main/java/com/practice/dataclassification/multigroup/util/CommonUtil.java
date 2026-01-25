@@ -8,13 +8,13 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class CommonUtil {
-    private static final String BETWEEN="between";
-    private static final String STRING_EQ="stringCompare";
-    private static final String NUM_EQ="numberEq";
-    private static final String LESS_THAN="lessThan";
-    private static final String GREATER_THAN="greaterThan";
+    private static final String BETWEEN = "between";
+    private static final String STRING_EQ = "stringCompare";
+    private static final String NUM_EQ = "numberEq";
+    private static final String LESS_THAN = "lessThan";
+    private static final String GREATER_THAN = "greaterThan";
 
-    public static Object convertValueType(String decisionType,String value){
+    public static Object convertValueType(String decisionType, String value) {
 
         switch (decisionType) {
             case BETWEEN:
@@ -43,7 +43,7 @@ public class CommonUtil {
     }
 
 
-    public static Date getStringToDate(String format,String dateStr) {
+    public static Date getStringToDate(String format, String dateStr) {
         try {
             DateFormat dateFormat = new SimpleDateFormat(format);
             return dateFormat.parse(dateStr.trim());
@@ -58,7 +58,7 @@ public class CommonUtil {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
-    public static String getDateToString(String format,Date date) {
+    public static String getDateToString(String format, Date date) {
         try {
             DateFormat dateFormat = new SimpleDateFormat(format);
             return dateFormat.format(date);

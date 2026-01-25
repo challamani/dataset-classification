@@ -17,7 +17,7 @@ public class ClassificationTreeNodeService {
     private final DatasetClassificationMetaReader datasetClassificationMetaReader;
 
     @Autowired
-    public ClassificationTreeNodeService(DatasetClassificationMetaReader datasetClassificationMetaReader){
+    public ClassificationTreeNodeService(DatasetClassificationMetaReader datasetClassificationMetaReader) {
         this.datasetClassificationMetaReader = datasetClassificationMetaReader;
         classificationTreeNodes = new HashMap<>();
     }
@@ -28,7 +28,7 @@ public class ClassificationTreeNodeService {
         rootClassificationNode.setDataType("string");
         rootClassificationNode.setType("ROOT");
         rootClassificationNode.setName("ROOT");
-        classificationTreeNodes.put("ROOT",rootClassificationNode);
+        classificationTreeNodes.put("ROOT", rootClassificationNode);
         return rootClassificationNode;
     }
 
@@ -40,9 +40,11 @@ public class ClassificationTreeNodeService {
 
         NodeLevel runningNodeLevel = classificationOption.nodeLevels().stream()
                 .filter(node -> node.name().equalsIgnoreCase(runningNode.getName()))
-                .findFirst().orElse(null);
+                .findFirst()
+                .orElse(null);
 
         if (Objects.nonNull(runningNode)) {
+
             StringBuilder nodeName = new StringBuilder();
             AtomicReference<String> nextNodeAttribute = new AtomicReference<>();
 
@@ -55,6 +57,7 @@ public class ClassificationTreeNodeService {
                             nextNodeAttribute.set(node.name());
                         }
                     });
+
             String nodeReference = nodeName.toString().substring(0, nodeName.toString().length() - 1);
             ClassificationNode treeNode = classificationTreeNodes.getOrDefault(nodeReference, new ClassificationNode());
             treeNode.setAttribute(runningNode.getAttribute());
@@ -106,17 +109,19 @@ public class ClassificationTreeNodeService {
         classificationTreeNodes = new HashMap<>();
         createRootClassification();
         DatasetClassificationMeta metadata = datasetClassificationMetaReader.getDatasetClassificationMetadata(datasetName);
+
         ClassificationOption classificationOption = metadata.classificationOptions().stream()
                 .filter(option1 -> option1.name().equalsIgnoreCase(datasetClassificationOption))
-                .findFirst().orElse(null);
+                .findFirst()
+                .orElse(null);
 
-        dataset.forEach(jsonObject ->
-                classificationOption.nodeLevels().forEach(nodeLevel -> {
-            ClassificationNode runningNode = metadata.classificationNodes()
-                    .stream().filter(node -> node.getName().equalsIgnoreCase(nodeLevel.name()))
-                    .findFirst().orElse(null);
-            createClassificationTreeNodes(jsonObject, runningNode, metadata, classificationOption);
-        }));
+        dataset.forEach(jsonObject -> classificationOption.nodeLevels()
+                .forEach(nodeLevel -> {
+                    ClassificationNode runningNode = metadata.classificationNodes()
+                            .stream().filter(node -> node.getName().equalsIgnoreCase(nodeLevel.name()))
+                            .findFirst().orElse(null);
+                    createClassificationTreeNodes(jsonObject, runningNode, metadata, classificationOption);
+                }));
         return classificationTreeNodes;
     }
 }
