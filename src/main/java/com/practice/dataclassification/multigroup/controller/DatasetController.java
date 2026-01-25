@@ -22,17 +22,19 @@ import java.util.List;
 public class DatasetController {
 
     private final CommonDatasetRepository commonDatasetRepository;
+
     @PostMapping("/api/dataset/{datasetName}/record")
     public ResponseEntity<String> handlePostRequest(@PathVariable String datasetName, @RequestBody String jsonString) {
-        JsonObject jsonObject =  new Gson().fromJson(jsonString, JsonObject.class);
+        JsonObject jsonObject = new Gson().fromJson(jsonString, JsonObject.class);
         commonDatasetRepository.save(datasetName, jsonObject);
         return new ResponseEntity<>("success", HttpStatus.CREATED);
     }
 
     @PostMapping("/api/dataset/{datasetName}/records")
     public ResponseEntity<String> saveRecords(@PathVariable String datasetName, @RequestBody String jsonString) {
-        Type jsonObjectType = new TypeToken<List<JsonObject>>(){}.getType();
-        List<JsonObject> jsonObjects =  new Gson().fromJson(jsonString, jsonObjectType);
+        Type jsonObjectType = new TypeToken<List<JsonObject>>() {
+        }.getType();
+        List<JsonObject> jsonObjects = new Gson().fromJson(jsonString, jsonObjectType);
 
         commonDatasetRepository.saveAll(datasetName, jsonObjects);
         return new ResponseEntity<>("success", HttpStatus.CREATED);

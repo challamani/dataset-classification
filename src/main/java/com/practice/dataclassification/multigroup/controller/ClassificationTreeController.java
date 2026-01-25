@@ -25,7 +25,7 @@ public class ClassificationTreeController {
     @GetMapping("/api/classificationTree/{datasetName}/{option}")
     public ResponseEntity<ClassificationTreeResult> handlePostRequest(@PathVariable String datasetName, @PathVariable String option) {
 
-        ClassificationTreeRequest classificationTreeRequest = new ClassificationTreeRequest(datasetName,option);
+        ClassificationTreeRequest classificationTreeRequest = new ClassificationTreeRequest(datasetName, option);
         ClassificationTreeNode classificationTreeNode = classificationTreeService.getClassificationTree(classificationTreeRequest);
         ClassificationTreeResult classificationTreeResult = new ClassificationTreeResult();
         classificationTreeResult.setDecisionTree(classificationTreeNode);
@@ -40,7 +40,7 @@ public class ClassificationTreeController {
     @GetMapping(value = "/api/classificationTree/{datasetName}/{option}/tree-view", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> getClassificationTreeView(@PathVariable String datasetName, @PathVariable String option) {
 
-        ClassificationTreeRequest classificationTreeRequest = new ClassificationTreeRequest(datasetName,option);
+        ClassificationTreeRequest classificationTreeRequest = new ClassificationTreeRequest(datasetName, option);
         ClassificationTreeNode classificationTreeNode = classificationTreeService.getClassificationTree(classificationTreeRequest);
         ClassificationTreeResult classificationTreeResult = new ClassificationTreeResult();
         classificationTreeResult.setDecisionTree(classificationTreeNode);
@@ -57,7 +57,7 @@ public class ClassificationTreeController {
 
         String htmlString =
                 ScriptConstants.head.concat(stringBuilder.toString())
-                .concat(ScriptConstants.script).concat(ScriptConstants.footer);
+                        .concat(ScriptConstants.script).concat(ScriptConstants.footer);
         return ResponseEntity.ok()
                 .contentType(MediaType.TEXT_HTML)
                 .body(htmlString);
@@ -85,7 +85,7 @@ public class ClassificationTreeController {
     @GetMapping("/api/classificationNodeRelation/{datasetName}/{option}")
     public ResponseEntity<List<FlatNode>> classificationNodeRelation(@PathVariable String datasetName, @PathVariable String option) {
 
-        ClassificationTreeRequest classificationTreeRequest = new ClassificationTreeRequest(datasetName,option);
+        ClassificationTreeRequest classificationTreeRequest = new ClassificationTreeRequest(datasetName, option);
         List<FlatNode> flatClassificationNodes = classificationTreeService.getFlatClassificationNodeRelations(classificationTreeRequest);
 
        /* List<List<String>> resultList = flatClassificationNodes.stream()
